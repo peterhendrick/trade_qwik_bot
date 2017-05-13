@@ -1,80 +1,79 @@
 import requests
-import json
-from config import api_key
+from config import API_KEY
 
-url = "https://www.tradeqwik.com/api/1/"
+URL = "https://www.tradeqwik.com/api/1/"
 
 
 def get_ticker():
-    tickerURL = url + "ticker"
-    return requests.request('GET', tickerURL)
+    ticker_url = URL + "ticker"
+    return requests.request('GET', ticker_url)
 
 
 def get_recent_trades(base, counter):
-    recentTradesURL = url + "recent_trades/" + base + "/" + counter
-    return requests.request("GET", recentTradesURL)
+    recent_trades_url = URL + "recent_trades/" + base + "/" + counter
+    return requests.request("GET", recent_trades_url)
 
 
 def get_open_trades(base, counter):
-    openTradesURL = url + "open_trades/" + base + "/" + counter
-    return requests.request("GET", openTradesURL)
+    open_trades_url = URL + "open_trades/" + base + "/" + counter
+    return requests.request("GET", open_trades_url)
 
 
 def make_bid_order(base, counter, amount, price):
-    bidURL = url + "bid"
-    bidReqBody = {
-        'api_key': api_key,
+    bid_url = URL + "bid"
+    bid_req_body = {
+        'api_key': API_KEY,
         'base': base,
         'counter': counter,
         'amount': amount,
         'price': price
     }
-    return requests.request('POST', bidURL, json=bidReqBody)
+    return requests.request('POST', bid_url, json=bid_req_body)
 
 
 def make_ask_order(base, counter, amount, price):
-    askURL = url + "ask"
-    askReqBody = {
-        'api_key': api_key,
+    ask_url = URL + "ask"
+    ask_req_body = {
+        'api_key': API_KEY,
         'base': base,
         'counter': counter,
         'amount': amount,
         'price': price
     }
-    return requests.request('POST', askURL, json=askReqBody)
+    return requests.request('POST', ask_url, json=ask_req_body)
 
 
-def cancel_order(orderNumber):
-    cancelURL = url + "cancel"
-    cancelReqBody = {
-        'api_key': api_key,
-        'order': orderNumber
+def cancel_order(order_number):
+    cancel_url = URL + "cancel"
+    cancel_req_body = {
+        'api_key': API_KEY,
+        'order': order_number
     }
-    return requests.request('POST', cancelURL, json=cancelReqBody)
+    return requests.request('POST', cancel_url, json=cancel_req_body)
 
 
 def pending_trades():
-    listURL = url + "pending_trades"
-    listReqBody = {
-        'api_key': api_key
+    list_url = URL + "pending_trades"
+    list_req_body = {
+        'api_key': API_KEY
     }
-    return requests.request('POST', listURL, json=listReqBody)
+    return requests.request('POST', list_url, json=list_req_body)
 
 
-def trade_history(before, limit, lastId):
-    historyURL = url + "trade_history"
-    historyReqBody = {
-        'api_key': api_key,
+def trade_history(before, limit, last_id):
+    history_url = URL + "trade_history"
+    history_req_body = {
+        'api_key': API_KEY,
         'before': before,
         'limit': limit,
-        'lastId': lastId
+        'lastId': last_id
     }
-    return requests.request('POST', historyURL, json=historyReqBody)
+    return requests.request('POST', history_url, json=history_req_body)
 
 
 def get_balance():
-    balanceURL = url + "balance"
-    balanceReqBody = {
-        'api_key': api_key
+    balance_url = URL + "balance"
+    balance_req_body = {
+        'api_key': API_KEY
     }
-    return requests.request("POST", balanceURL, json=balanceReqBody)
+    return requests.request("POST", balance_url, json=balance_req_body)
