@@ -1,2 +1,2 @@
-urllib3==1.21.1
 requests==2.12.4
+pydash==4.0.3
