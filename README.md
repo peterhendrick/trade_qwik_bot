@@ -15,6 +15,8 @@ It will also print out any recent VIVA/BTC tradeqwik exchange trades as well as 
 
 The bot will make requests every 60 seconds when running
 
+All api calls are all held within the trade.py file, while the bot itself operates within the trade_qwik.py file.
+
 
 To download:
 
