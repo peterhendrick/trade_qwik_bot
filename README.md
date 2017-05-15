@@ -7,10 +7,10 @@ A www.tradeqwik.com bot to automate your trades!
 This TradeQwik bot was written using python 3.6.0
 
 This bot will create VIVA/BTC ask offers if the last VIVA/BTC tradeqwik exchange trade is over .005 VIVA/BTC in price,
-or if there are any existing bid offers on the exchange over .005 VIVA/BTC.
+or if there are any existing bid offers on the exchange over .005 VIVA/BTC, it will attempt to fulfill them.
 
-It create VIVA/BTC bid offers if the last VIVA/BTC tradeqwik exchange trade is under .001 VIVA/BTC in price,
-or if there are any existing ask offers on the exchange under .001 VIVA/BTC.
+It will create VIVA/BTC bid offers if the last VIVA/BTC tradeqwik exchange trade is under .001 VIVA/BTC in price,
+or if there are any existing ask offers on the exchange under .001 VIVA/BTC, it will attempt to fulfill them.
 
 It will cancel any of your pending orders if they are 10% different from the last traded price on the exchange.
 
