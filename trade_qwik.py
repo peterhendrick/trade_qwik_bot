@@ -40,23 +40,17 @@ def process_responses(responses):
 def process_ticker_response(ticker_response):
     btc_dict = py_.find(ticker_response, lambda x: x['counter'] == 'BTC')
     if float(btc_dict['last']) > .005:
-        ask_request = trade.make_ask_order('VIVA', 'BTC', '1', '0.005')
+        ask_request = trade.make_ask_order('VIVA', 'BTC', '100', '0.005')
         print(ask_request.status_code)
     if float(btc_dict['last']) < .001:
-        bid_request = trade.make_bid_order('VIVA', 'BTC', '1', '0.001')
+        bid_request = trade.make_bid_order('VIVA', 'BTC', '100', '0.001')
         print(bid_request.status_code)
     print(ticker_response)
 
 
 def process_recent_trades_response(recent_trades_response):
-    btc_dict = py_.find(recent_trades_response, lambda x: x['counter'] == 'BTC')
-    if float(btc_dict['price']) > .005:
-        ask_request = trade.make_ask_order('VIVA', 'BTC', '1', '0.005')
-        print(ask_request.status_code)
-    if float(btc_dict['price']) < .001:
-        bid_request = trade.make_bid_order('VIVA', 'BTC', '1', '0.001')
-        print(bid_request.status_code)
-    print(recent_trades_response)
+    btc_dict = py_.filter(recent_trades_response, lambda x: x['counter'] == 'BTC')
+    print(btc_dict)
 
 
 def process_open_btc_trades_response(open_btc_trades_response):
@@ -65,12 +59,18 @@ def process_open_btc_trades_response(open_btc_trades_response):
     lowest_ask = py_.head(ask_list)
     highest_bid = py_.last(bid_list)
     if float(highest_bid['price']) > .005:
-        print("Highest bid is: " + highest_bid['price'] + ", making ask offer for 100 VIVA at .005 BTC/VIVA")
-        ask_request = trade.make_ask_order('VIVA', 'BTC', '100', '0.005')
+        amount = highest_bid['amount']
+        price = highest_bid['price']
+        print("Highest bid is: " + highest_bid['price'] + ", making ask offer for " + amount + " VIVA at " + price +
+              " BTC/VIVA")
+        ask_request = trade.make_ask_order('VIVA', 'BTC', str(amount), str(price))
         print(ask_request.status_code)
     if float(lowest_ask['price']) < .001:
-        print("Highest bid is: " + highest_bid['price'] + ", making bid offer for 100 VIVA at .001 BTC/VIVA")
-        bid_request = trade.make_bid_order('VIVA', 'BTC', '100', '0.001')
+        amount = lowest_ask['amount']
+        price = lowest_ask['price']
+        print("Highest bid is: " + highest_bid['price'] + ", making bid offer for " + amount + " VIVA at " + price +
+              " BTC/VIVA")
+        bid_request = trade.make_bid_order('VIVA', 'BTC', str(amount), str(price))
         print(bid_request.status_code)
     print(open_btc_trades_response)
 
@@ -79,7 +79,7 @@ def process_my_pending_trades_response(my_pending_trades_response, current_price
     for single_trade in my_pending_trades_response:
         if (float(single_trade['price']) < current_price * .9) or (float(single_trade['price']) > current_price * 1.1):
             print("Canceling order because it is more than 10% different than current price")
-            cancel_order = trade.cancel_order(float(single_trade['order']))
+            cancel_order = trade.cancel_order(int(single_trade['order']))
             print(cancel_order.status_code)
     print(my_pending_trades_response)
 
