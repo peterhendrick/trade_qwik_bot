@@ -45,12 +45,11 @@ def process_ticker_response(ticker_response):
     if float(btc_dict['last']) < .001:
         bid_request = trade.make_bid_order('VIVA', 'BTC', '100', '0.001')
         print(bid_request.status_code)
-    print(ticker_response)
 
 
 def process_recent_trades_response(recent_trades_response):
-    btc_dict = py_.filter(recent_trades_response, lambda x: x['counter'] == 'BTC')
-    print(btc_dict)
+    btc_list = py_.filter(recent_trades_response, lambda x: x['counter'] == 'BTC')
+    print(btc_list)
 
 
 def process_open_btc_trades_response(open_btc_trades_response):
@@ -72,7 +71,6 @@ def process_open_btc_trades_response(open_btc_trades_response):
               " BTC/VIVA")
         bid_request = trade.make_bid_order('VIVA', 'BTC', str(amount), str(price))
         print(bid_request.status_code)
-    print(open_btc_trades_response)
 
 
 def process_my_pending_trades_response(my_pending_trades_response, current_price):
@@ -81,7 +79,6 @@ def process_my_pending_trades_response(my_pending_trades_response, current_price
             print("Canceling order because it is more than 10% different than current price")
             cancel_order = trade.cancel_order(int(single_trade['order']))
             print(cancel_order.status_code)
-    print(my_pending_trades_response)
 
 
 def process_my_trade_history(my_trade_history_response):
