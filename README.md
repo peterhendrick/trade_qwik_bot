@@ -21,7 +21,7 @@ All api calls are all held within the trade.py file, while the bot itself operat
 To download:
 
 ```bash
-git clone https://github.com/peterhendrick/tradeQwikBot && cd tradeQwikBot
+git clone https://github.com/peterhendrick/trade_qwik_bot && cd trade_qwik_bot
 ```
 
 Then add a config file for your API_KEY, type:
@@ -40,4 +40,34 @@ To run type:
 
 ```bash
 python3 trade_qwik.py
+```
+
+
+If you would like to verify your download, you can use the SHASUMS file and the gpg SHASUMS.sig file.
+
+To verify the integrity of the SHASUMS file, first import my public pgp key:
+
+```bash
+gpg --keyserver pgp.mit.edu --recv EC3ED53D
+```
+
+Then, to verify my signature of the SHASUMS file, type:
+
+```bash
+gpg --verify SHASUMS.sig SHASUMS
+```
+
+If you see "Good signature", then that is my file.
+
+
+To verify your downloaded files, type:
+
+```bash
+shasum -a 256 trade.py && cat SHASUMS | grep trade.py
+```
+
+If the lines match exactly, you have verified your download hashes match. Now just get the hash from the other file.
+
+```bash
+shasum -a 256 trade_qwik.py && cat SHASUMS | grep trade_qwik.py
 ```
