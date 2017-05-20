@@ -45,7 +45,12 @@ def process_ticker_response(ticker_response):
 
 def process_recent_trades_response(recent_trades_response):
     btc_list = py_.filter(recent_trades_response, lambda x: x['counter'] == 'BTC')
-    print(btc_list)
+    btc_list = py_.order_by(btc_list, ['price'])
+    lowest_trade = py_.head(btc_list)
+    highest_trade = py_.last(btc_list)
+    lowest_trade['created'] = time.strftime("%F %H:%M", time.localtime(lowest_trade['created'] / 1000))
+    highest_trade['created'] = time.strftime("%F %H:%M", time.localtime(highest_trade['created'] / 1000))
+    print("Highest recent trade: " + str(highest_trade) + "\nLowest recent trade: " + str(lowest_trade))
 
 
 def process_open_btc_trades_response(open_btc_trades_response):
@@ -83,7 +88,8 @@ def process_my_trade_history(my_trade_history_response):
 
 def process_my_balance_response(my_balance_response):
     btc_dict = py_.find(my_balance_response, lambda x: x['currency'] == 'BTC')
-    print("My BTC balance: " + str(btc_dict))
+    viva_dict = py_.find(my_balance_response, lambda x: x['currency'] == 'VIVA')
+    print("My BTC balance: " + str(btc_dict) + "\nMy VIVA balance: " + str(viva_dict))
 
 
 while True:
