@@ -8,7 +8,7 @@ def main():
     requests = make_requests()
     response_content = []
     for request in requests:
-        response_content.append(request_content(request))
+        response_content.append(json.loads(request.content))
     process_responses(response_content)
 
 
@@ -20,10 +20,6 @@ def make_requests():
     my_trade_history = trade.trade_history(None, None, None)
     my_balance = trade.get_balance()
     return [ticker_request, recent_trades_request, open_btc_trades_request, my_pending_trades, my_trade_history, my_balance]
-
-
-def request_content(request):
-    return json.loads(request.content)
 
 
 def process_responses(responses):
@@ -67,7 +63,7 @@ def process_open_btc_trades_response(open_btc_trades_response):
     if float(lowest_ask['price']) < .001:
         amount = lowest_ask['amount']
         price = lowest_ask['price']
-        print("Highest bid is: " + highest_bid['price'] + ", making bid offer for " + amount + " VIVA at " + price +
+        print("Lowest ask is: " + highest_bid['price'] + ", making bid offer for " + amount + " VIVA at " + price +
               " BTC/VIVA")
         bid_request = trade.make_bid_order('VIVA', 'BTC', str(amount), str(price))
         print(bid_request.status_code)
